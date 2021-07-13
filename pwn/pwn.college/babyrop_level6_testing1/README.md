@@ -7,7 +7,7 @@
 ## Solution: 
 * PIE was not enabled in binary this means code and data section will not be randomised.
 * Called read syscall and stored the name of the flag's filename in a particular address in data section
-* Because the address was not randomised we can hardcode the address in the exploit. Thus, making it similar (in a loose sense) to address leak. 
+* Because the 'data' address was not randomised we can hardcode the address in the exploit. Thus, making it similar (in a loose sense) to address leak. 
 * Instead of directly calling the syscall, call the equivalent function in libc.
 * This removes the dependancy on the value in rax and syscall gadget/instruction.
 * Call libc functions with proper arguments.

