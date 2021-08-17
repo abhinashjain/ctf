@@ -8,8 +8,9 @@
 * Copied used binary and libc from the server.
 * Used 'pwninit' to find a correct loader and to generate a patched binary to emulate a server side environment.
 * printf problem was resolved by pointing the first argument to already existing data in got table.
-* PIE was not enabled in binary this means code and data section will not be randomised.
-* PIE was enabled for the libc this means code and data section was randomised. Hence, made it leak the address using puts(puts) method.
+* PIE was enabled for the libc this means code and data section was randomised.
+* PIE was not enabled in binary this means code and data section will not be randomised. Hence, made it leak the address using puts(puts) method.
+* puts(puts) method only work because PIE is not enabled in binary.
 * Use puts(puts.got) to leak dynamic address of puts function in libc.
 * Use this leaked address to calculate the base address of dynamically loaded libc.
 * Then call any other libc's functions 
